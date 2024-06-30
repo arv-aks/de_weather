@@ -35,15 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
         orElse: () {},
       );
 
-      // authState.maybeWhen(
-      //   authenticated: (user) {
-      //     context.router.replace(const HomeRoute());
-      //   },
-      //   unauthenticated: () {
-      //     context.router.replace(const LoginRoute());
-      //   },
-      //   orElse: () {},
-      // );
+
     });
   }
 
