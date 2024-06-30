@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "334881812231",
+    "project_id": "logins-e155f",
+    "storage_bucket": "logins-e155f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334881812231:android:774e739825067eb4641fa2",
+        "android_client_info": {
+          "package_name": "com.example.de_weather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334881812231-2dbhe1c4r99068b1mubqnadeiqo1qnqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArEOBdszyBlnt8HCy7JyxcBkdOfRvqD3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334881812231-2dbhe1c4r99068b1mubqnadeiqo1qnqr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "334881812231-5k4sqj1na8c6nqerh8ggqn4g77htrdbo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pract.logins"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334881812231:android:3c0c8518bb1e73e7641fa2",
+        "android_client_info": {
+          "package_name": "com.pract.logins"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334881812231-tqhrf4ug7ouqch0mi8phor9gg2nf023p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pract.logins",
+            "certificate_hash": "338faa2f769e960548202a49a3589acecf2146b2"
+          }
+        },
+        {
+          "client_id": "334881812231-2dbhe1c4r99068b1mubqnadeiqo1qnqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArEOBdszyBlnt8HCy7JyxcBkdOfRvqD3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334881812231-2dbhe1c4r99068b1mubqnadeiqo1qnqr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "334881812231-5k4sqj1na8c6nqerh8ggqn4g77htrdbo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pract.logins"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
