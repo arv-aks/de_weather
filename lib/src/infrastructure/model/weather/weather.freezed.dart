@@ -21,8 +21,10 @@ WeatherModel _$WeatherModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$WeatherModel {
   @JsonKey(name: 'current')
+  @HiveField(0)
   Current get current => throw _privateConstructorUsedError;
   @JsonKey(name: 'hourly')
+  @HiveField(1)
   Hourly get hourly => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,8 +40,8 @@ abstract class $WeatherModelCopyWith<$Res> {
       _$WeatherModelCopyWithImpl<$Res, WeatherModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'current') Current current,
-      @JsonKey(name: 'hourly') Hourly hourly});
+      {@JsonKey(name: 'current') @HiveField(0) Current current,
+      @JsonKey(name: 'hourly') @HiveField(1) Hourly hourly});
 
   $CurrentCopyWith<$Res> get current;
   $HourlyCopyWith<$Res> get hourly;
@@ -99,8 +101,8 @@ abstract class _$$WeatherModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'current') Current current,
-      @JsonKey(name: 'hourly') Hourly hourly});
+      {@JsonKey(name: 'current') @HiveField(0) Current current,
+      @JsonKey(name: 'hourly') @HiveField(1) Hourly hourly});
 
   @override
   $CurrentCopyWith<$Res> get current;
@@ -137,19 +139,23 @@ class __$$WeatherModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$WeatherModelImpl with DiagnosticableTreeMixin implements _WeatherModel {
+@HiveType(typeId: 4)
+class _$WeatherModelImpl extends _WeatherModel with DiagnosticableTreeMixin {
   _$WeatherModelImpl(
-      {@JsonKey(name: 'current') required this.current,
-      @JsonKey(name: 'hourly') required this.hourly});
+      {@JsonKey(name: 'current') @HiveField(0) required this.current,
+      @JsonKey(name: 'hourly') @HiveField(1) required this.hourly})
+      : super._();
 
   factory _$WeatherModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$WeatherModelImplFromJson(json);
 
   @override
   @JsonKey(name: 'current')
+  @HiveField(0)
   final Current current;
   @override
   @JsonKey(name: 'hourly')
+  @HiveField(1)
   final Hourly hourly;
 
   @override
@@ -193,20 +199,24 @@ class _$WeatherModelImpl with DiagnosticableTreeMixin implements _WeatherModel {
   }
 }
 
-abstract class _WeatherModel implements WeatherModel {
+abstract class _WeatherModel extends WeatherModel {
   factory _WeatherModel(
-          {@JsonKey(name: 'current') required final Current current,
-          @JsonKey(name: 'hourly') required final Hourly hourly}) =
-      _$WeatherModelImpl;
+      {@JsonKey(name: 'current') @HiveField(0) required final Current current,
+      @JsonKey(name: 'hourly')
+      @HiveField(1)
+      required final Hourly hourly}) = _$WeatherModelImpl;
+  _WeatherModel._() : super._();
 
   factory _WeatherModel.fromJson(Map<String, dynamic> json) =
       _$WeatherModelImpl.fromJson;
 
   @override
   @JsonKey(name: 'current')
+  @HiveField(0)
   Current get current;
   @override
   @JsonKey(name: 'hourly')
+  @HiveField(1)
   Hourly get hourly;
   @override
   @JsonKey(ignore: true)
@@ -221,11 +231,20 @@ Current _$CurrentFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Current {
   @JsonKey(name: 'time')
+  @HiveField(0)
   String get time => throw _privateConstructorUsedError;
   @JsonKey(name: 'temperature_2m')
+  @HiveField(1)
   double get temperature => throw _privateConstructorUsedError;
   @JsonKey(name: 'wind_speed_10m')
+  @HiveField(2)
   double get windSpeed => throw _privateConstructorUsedError;
+  @JsonKey(name: 'relative_humidity_2m')
+  @HiveField(3)
+  double get humidity => throw _privateConstructorUsedError;
+  @JsonKey(name: 'uv_index_max')
+  @HiveField(4)
+  double get uvIndex => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -238,9 +257,11 @@ abstract class $CurrentCopyWith<$Res> {
       _$CurrentCopyWithImpl<$Res, Current>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'time') String time,
-      @JsonKey(name: 'temperature_2m') double temperature,
-      @JsonKey(name: 'wind_speed_10m') double windSpeed});
+      {@JsonKey(name: 'time') @HiveField(0) String time,
+      @JsonKey(name: 'temperature_2m') @HiveField(1) double temperature,
+      @JsonKey(name: 'wind_speed_10m') @HiveField(2) double windSpeed,
+      @JsonKey(name: 'relative_humidity_2m') @HiveField(3) double humidity,
+      @JsonKey(name: 'uv_index_max') @HiveField(4) double uvIndex});
 }
 
 /// @nodoc
@@ -259,6 +280,8 @@ class _$CurrentCopyWithImpl<$Res, $Val extends Current>
     Object? time = null,
     Object? temperature = null,
     Object? windSpeed = null,
+    Object? humidity = null,
+    Object? uvIndex = null,
   }) {
     return _then(_value.copyWith(
       time: null == time
@@ -273,6 +296,14 @@ class _$CurrentCopyWithImpl<$Res, $Val extends Current>
           ? _value.windSpeed
           : windSpeed // ignore: cast_nullable_to_non_nullable
               as double,
+      humidity: null == humidity
+          ? _value.humidity
+          : humidity // ignore: cast_nullable_to_non_nullable
+              as double,
+      uvIndex: null == uvIndex
+          ? _value.uvIndex
+          : uvIndex // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -285,9 +316,11 @@ abstract class _$$CurrentImplCopyWith<$Res> implements $CurrentCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'time') String time,
-      @JsonKey(name: 'temperature_2m') double temperature,
-      @JsonKey(name: 'wind_speed_10m') double windSpeed});
+      {@JsonKey(name: 'time') @HiveField(0) String time,
+      @JsonKey(name: 'temperature_2m') @HiveField(1) double temperature,
+      @JsonKey(name: 'wind_speed_10m') @HiveField(2) double windSpeed,
+      @JsonKey(name: 'relative_humidity_2m') @HiveField(3) double humidity,
+      @JsonKey(name: 'uv_index_max') @HiveField(4) double uvIndex});
 }
 
 /// @nodoc
@@ -304,6 +337,8 @@ class __$$CurrentImplCopyWithImpl<$Res>
     Object? time = null,
     Object? temperature = null,
     Object? windSpeed = null,
+    Object? humidity = null,
+    Object? uvIndex = null,
   }) {
     return _then(_$CurrentImpl(
       time: null == time
@@ -318,34 +353,57 @@ class __$$CurrentImplCopyWithImpl<$Res>
           ? _value.windSpeed
           : windSpeed // ignore: cast_nullable_to_non_nullable
               as double,
+      humidity: null == humidity
+          ? _value.humidity
+          : humidity // ignore: cast_nullable_to_non_nullable
+              as double,
+      uvIndex: null == uvIndex
+          ? _value.uvIndex
+          : uvIndex // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$CurrentImpl with DiagnosticableTreeMixin implements _Current {
+@HiveType(typeId: 5)
+class _$CurrentImpl extends _Current with DiagnosticableTreeMixin {
   _$CurrentImpl(
-      {@JsonKey(name: 'time') this.time = '',
-      @JsonKey(name: 'temperature_2m') this.temperature = 0.0,
-      @JsonKey(name: 'wind_speed_10m') this.windSpeed = 0.0});
+      {@JsonKey(name: 'time') @HiveField(0) this.time = '',
+      @JsonKey(name: 'temperature_2m') @HiveField(1) this.temperature = 0.0,
+      @JsonKey(name: 'wind_speed_10m') @HiveField(2) this.windSpeed = 0.0,
+      @JsonKey(name: 'relative_humidity_2m') @HiveField(3) this.humidity = 0.0,
+      @JsonKey(name: 'uv_index_max') @HiveField(4) this.uvIndex = 0.0})
+      : super._();
 
   factory _$CurrentImpl.fromJson(Map<String, dynamic> json) =>
       _$$CurrentImplFromJson(json);
 
   @override
   @JsonKey(name: 'time')
+  @HiveField(0)
   final String time;
   @override
   @JsonKey(name: 'temperature_2m')
+  @HiveField(1)
   final double temperature;
   @override
   @JsonKey(name: 'wind_speed_10m')
+  @HiveField(2)
   final double windSpeed;
+  @override
+  @JsonKey(name: 'relative_humidity_2m')
+  @HiveField(3)
+  final double humidity;
+  @override
+  @JsonKey(name: 'uv_index_max')
+  @HiveField(4)
+  final double uvIndex;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Current(time: $time, temperature: $temperature, windSpeed: $windSpeed)';
+    return 'Current(time: $time, temperature: $temperature, windSpeed: $windSpeed, humidity: $humidity, uvIndex: $uvIndex)';
   }
 
   @override
@@ -355,7 +413,9 @@ class _$CurrentImpl with DiagnosticableTreeMixin implements _Current {
       ..add(DiagnosticsProperty('type', 'Current'))
       ..add(DiagnosticsProperty('time', time))
       ..add(DiagnosticsProperty('temperature', temperature))
-      ..add(DiagnosticsProperty('windSpeed', windSpeed));
+      ..add(DiagnosticsProperty('windSpeed', windSpeed))
+      ..add(DiagnosticsProperty('humidity', humidity))
+      ..add(DiagnosticsProperty('uvIndex', uvIndex));
   }
 
   @override
@@ -367,12 +427,16 @@ class _$CurrentImpl with DiagnosticableTreeMixin implements _Current {
             (identical(other.temperature, temperature) ||
                 other.temperature == temperature) &&
             (identical(other.windSpeed, windSpeed) ||
-                other.windSpeed == windSpeed));
+                other.windSpeed == windSpeed) &&
+            (identical(other.humidity, humidity) ||
+                other.humidity == humidity) &&
+            (identical(other.uvIndex, uvIndex) || other.uvIndex == uvIndex));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, time, temperature, windSpeed);
+  int get hashCode =>
+      Object.hash(runtimeType, time, temperature, windSpeed, humidity, uvIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -388,23 +452,41 @@ class _$CurrentImpl with DiagnosticableTreeMixin implements _Current {
   }
 }
 
-abstract class _Current implements Current {
+abstract class _Current extends Current {
   factory _Current(
-      {@JsonKey(name: 'time') final String time,
-      @JsonKey(name: 'temperature_2m') final double temperature,
-      @JsonKey(name: 'wind_speed_10m') final double windSpeed}) = _$CurrentImpl;
+      {@JsonKey(name: 'time') @HiveField(0) final String time,
+      @JsonKey(name: 'temperature_2m') @HiveField(1) final double temperature,
+      @JsonKey(name: 'wind_speed_10m') @HiveField(2) final double windSpeed,
+      @JsonKey(name: 'relative_humidity_2m')
+      @HiveField(3)
+      final double humidity,
+      @JsonKey(name: 'uv_index_max')
+      @HiveField(4)
+      final double uvIndex}) = _$CurrentImpl;
+  _Current._() : super._();
 
   factory _Current.fromJson(Map<String, dynamic> json) = _$CurrentImpl.fromJson;
 
   @override
   @JsonKey(name: 'time')
+  @HiveField(0)
   String get time;
   @override
   @JsonKey(name: 'temperature_2m')
+  @HiveField(1)
   double get temperature;
   @override
   @JsonKey(name: 'wind_speed_10m')
+  @HiveField(2)
   double get windSpeed;
+  @override
+  @JsonKey(name: 'relative_humidity_2m')
+  @HiveField(3)
+  double get humidity;
+  @override
+  @JsonKey(name: 'uv_index_max')
+  @HiveField(4)
+  double get uvIndex;
   @override
   @JsonKey(ignore: true)
   _$$CurrentImplCopyWith<_$CurrentImpl> get copyWith =>
@@ -418,10 +500,13 @@ Hourly _$HourlyFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Hourly {
   @JsonKey(name: 'time')
+  @HiveField(0)
   List<String> get time => throw _privateConstructorUsedError;
   @JsonKey(name: 'temperature_2m')
+  @HiveField(1)
   List<double> get temperature => throw _privateConstructorUsedError;
   @JsonKey(name: 'wind_speed_10m')
+  @HiveField(2)
   List<double> get windSpeed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -435,9 +520,9 @@ abstract class $HourlyCopyWith<$Res> {
       _$HourlyCopyWithImpl<$Res, Hourly>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'time') List<String> time,
-      @JsonKey(name: 'temperature_2m') List<double> temperature,
-      @JsonKey(name: 'wind_speed_10m') List<double> windSpeed});
+      {@JsonKey(name: 'time') @HiveField(0) List<String> time,
+      @JsonKey(name: 'temperature_2m') @HiveField(1) List<double> temperature,
+      @JsonKey(name: 'wind_speed_10m') @HiveField(2) List<double> windSpeed});
 }
 
 /// @nodoc
@@ -482,9 +567,9 @@ abstract class _$$HourlyImplCopyWith<$Res> implements $HourlyCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'time') List<String> time,
-      @JsonKey(name: 'temperature_2m') List<double> temperature,
-      @JsonKey(name: 'wind_speed_10m') List<double> windSpeed});
+      {@JsonKey(name: 'time') @HiveField(0) List<String> time,
+      @JsonKey(name: 'temperature_2m') @HiveField(1) List<double> temperature,
+      @JsonKey(name: 'wind_speed_10m') @HiveField(2) List<double> windSpeed});
 }
 
 /// @nodoc
@@ -521,15 +606,20 @@ class __$$HourlyImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$HourlyImpl with DiagnosticableTreeMixin implements _Hourly {
+@HiveType(typeId: 6)
+class _$HourlyImpl extends _Hourly with DiagnosticableTreeMixin {
   _$HourlyImpl(
-      {@JsonKey(name: 'time') final List<String> time = const [],
+      {@JsonKey(name: 'time') @HiveField(0) final List<String> time = const [],
       @JsonKey(name: 'temperature_2m')
+      @HiveField(1)
       final List<double> temperature = const [],
-      @JsonKey(name: 'wind_speed_10m') final List<double> windSpeed = const []})
+      @JsonKey(name: 'wind_speed_10m')
+      @HiveField(2)
+      final List<double> windSpeed = const []})
       : _time = time,
         _temperature = temperature,
-        _windSpeed = windSpeed;
+        _windSpeed = windSpeed,
+        super._();
 
   factory _$HourlyImpl.fromJson(Map<String, dynamic> json) =>
       _$$HourlyImplFromJson(json);
@@ -537,6 +627,7 @@ class _$HourlyImpl with DiagnosticableTreeMixin implements _Hourly {
   final List<String> _time;
   @override
   @JsonKey(name: 'time')
+  @HiveField(0)
   List<String> get time {
     if (_time is EqualUnmodifiableListView) return _time;
     // ignore: implicit_dynamic_type
@@ -546,6 +637,7 @@ class _$HourlyImpl with DiagnosticableTreeMixin implements _Hourly {
   final List<double> _temperature;
   @override
   @JsonKey(name: 'temperature_2m')
+  @HiveField(1)
   List<double> get temperature {
     if (_temperature is EqualUnmodifiableListView) return _temperature;
     // ignore: implicit_dynamic_type
@@ -555,6 +647,7 @@ class _$HourlyImpl with DiagnosticableTreeMixin implements _Hourly {
   final List<double> _windSpeed;
   @override
   @JsonKey(name: 'wind_speed_10m')
+  @HiveField(2)
   List<double> get windSpeed {
     if (_windSpeed is EqualUnmodifiableListView) return _windSpeed;
     // ignore: implicit_dynamic_type
@@ -610,23 +703,30 @@ class _$HourlyImpl with DiagnosticableTreeMixin implements _Hourly {
   }
 }
 
-abstract class _Hourly implements Hourly {
+abstract class _Hourly extends Hourly {
   factory _Hourly(
-          {@JsonKey(name: 'time') final List<String> time,
-          @JsonKey(name: 'temperature_2m') final List<double> temperature,
-          @JsonKey(name: 'wind_speed_10m') final List<double> windSpeed}) =
-      _$HourlyImpl;
+      {@JsonKey(name: 'time') @HiveField(0) final List<String> time,
+      @JsonKey(name: 'temperature_2m')
+      @HiveField(1)
+      final List<double> temperature,
+      @JsonKey(name: 'wind_speed_10m')
+      @HiveField(2)
+      final List<double> windSpeed}) = _$HourlyImpl;
+  _Hourly._() : super._();
 
   factory _Hourly.fromJson(Map<String, dynamic> json) = _$HourlyImpl.fromJson;
 
   @override
   @JsonKey(name: 'time')
+  @HiveField(0)
   List<String> get time;
   @override
   @JsonKey(name: 'temperature_2m')
+  @HiveField(1)
   List<double> get temperature;
   @override
   @JsonKey(name: 'wind_speed_10m')
+  @HiveField(2)
   List<double> get windSpeed;
   @override
   @JsonKey(ignore: true)

@@ -21,27 +21,26 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigate() async {
-    await Future.delayed(const Duration(seconds: 2)).then((_) {
-      final authState = context.read<AppBloc>().state;
+    // await Future.delayed(const Duration(seconds: 2)).then((_) {
+    //   final authState = context.read<AppBloc>().state;
 
-      authState.maybeMap(
-        (_) {},
-        authenticated: (_) {
-          context.replaceRoute(const HomeRoute());
-        },
-        unauthenticated: (_) {
-          context.router.replace(const LoginRoute());
-        },
-        orElse: () {},
-      );
-
-
-    });
+    //   authState.maybeMap(
+    //     (_) {},
+    //     authenticated: (_) {
+    //       context.replaceRoute(const HomeRoute());
+    //     },
+    //     unauthenticated: (_) {
+    //       context.router.replace(const LoginRoute());
+    //     },
+    //     orElse: () {},
+    //   );
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return BlocConsumer<AppBloc, AppState>(builder: (context, state) {
+      return const Scaffold(
       body: Center(
         child: Icon(
           Icons.code,
@@ -49,5 +48,13 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+    }, listener: (context, state) {
+       if (state is Authenticated) {
+           context.replaceRoute(const HomeRoute());
+          }
+          if (state is Unauthenticated) {
+            context.replaceRoute(const LoginRoute());
+          }
+    },);
   }
 }

@@ -1,13 +1,13 @@
+import 'package:de_weather/src/infrastructure/local/local_weather.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 
-@module
-abstract class HiveModule {
-  @lazySingleton
-  @preResolve
-  Future<Box> getHive() async {
-    await Hive.initFlutter();
+abstract class WeatherDao {
+  Future<void> init();
 
-    return Hive.openBox('de_weather');
-  }
+  Future<void> saveLocalWeather({required LocalWeather weather});
+
+  Future<LocalWeather?> getLocalWeather();
+
+  Future<void> clear();
 }

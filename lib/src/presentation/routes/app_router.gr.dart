@@ -27,10 +27,26 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginScreen(),
       );
     },
+    SearchRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SearchScreen(),
+      );
+    },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SplashScreen(),
+      );
+    },
+    WeatherRoute.name: (routeData) {
+      final args = routeData.argsAs<WeatherRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WeatherScreen(
+          key: args.key,
+          place: args.place,
+        ),
       );
     },
   };
@@ -65,6 +81,20 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SearchScreen]
+class SearchRoute extends PageRouteInfo<void> {
+  const SearchRoute({List<PageRouteInfo>? children})
+      : super(
+          SearchRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SplashScreen]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
@@ -76,4 +106,42 @@ class SplashRoute extends PageRouteInfo<void> {
   static const String name = 'SplashRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WeatherScreen]
+class WeatherRoute extends PageRouteInfo<WeatherRouteArgs> {
+  WeatherRoute({
+    Key? key,
+    required Places place,
+    List<PageRouteInfo>? children,
+  }) : super(
+          WeatherRoute.name,
+          args: WeatherRouteArgs(
+            key: key,
+            place: place,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'WeatherRoute';
+
+  static const PageInfo<WeatherRouteArgs> page =
+      PageInfo<WeatherRouteArgs>(name);
+}
+
+class WeatherRouteArgs {
+  const WeatherRouteArgs({
+    this.key,
+    required this.place,
+  });
+
+  final Key? key;
+
+  final Places place;
+
+  @override
+  String toString() {
+    return 'WeatherRouteArgs{key: $key, place: $place}';
+  }
 }

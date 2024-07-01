@@ -8,6 +8,6 @@ class CustomLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(child: SizedBox(
       height: 30, width: 30,
-      child: CircularProgressIndicator(strokeWidth: 0.9,)),);
+      child: CircularProgressIndicator(strokeWidth: 1.5,)),);
   }
 }
