@@ -2,6 +2,10 @@
 
 Weather app using flutter. 
 
+State Management: bloc, 
+Navigation: auto_route
+Local database: hive
+
 features: 
 1. Splash
 2. Login screen. (sign up is handled with the same)
