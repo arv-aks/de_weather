@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:de_weather/src/infrastructure/result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
@@ -22,25 +23,35 @@ class AuthRepository {
     });
   }
 
-  Future<void> signUp({required String email, required String password}) async {
+  Future<Result<String>> signUp(
+      {required String email, required String password}) async {
     try {
       await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      return const Success(data: "success");
     } on FirebaseAuthException catch (e) {
       if (e.code == "email-already-in-use") {
         //try to login
-        await logInWithEmailAndPassword(email: email, password: password);
+        return await logInWithEmailAndPassword(
+            email: email, password: password);
       } else {
-        throw SignUpWithEmailAndPasswordFailure.fromCode(e.code);
+        return Error(
+            message: "${const SignUpWithEmailAndPasswordFailure()}",
+            exception: e);
       }
-    } catch (_) {
-      throw const SignUpWithEmailAndPasswordFailure();
+    } catch (e) {
+      return Error(
+        message: "An unknown error occurred: ${e.toString()}",
+        exception: Exception(e.toString()),
+      );
     }
+
+    // return const Success(data: "success");
   }
 
-  Future<void> logInWithEmailAndPassword({
+  Future<Result<String>> logInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -49,10 +60,17 @@ class AuthRepository {
         email: email,
         password: password,
       );
+      return const Success(data: "success");
     } on FirebaseAuthException catch (e) {
-      throw LogInWithEmailAndPasswordFailure.fromCode(e.code);
-    } catch (_) {
-      throw const LogInWithEmailAndPasswordFailure();
+      return Error(
+        message: "Firebase Auth Error: ${e.message}",
+        exception: e,
+      );
+    } catch (e) {
+      return Error(
+        message: "An unknown error occurred: ${e.toString()}",
+        exception: Exception(e.toString()),
+      );
     }
   }
 

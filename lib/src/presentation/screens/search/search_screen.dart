@@ -1,10 +1,9 @@
-
 import 'package:auto_route/auto_route.dart';
-import 'package:de_weather/src/infrastructure/model/location/location.dart';
+import 'package:de_weather/src/core/constants.dart';
 import 'package:de_weather/src/infrastructure/model/places/places.dart';
 import 'package:de_weather/src/presentation/routes/app_router.dart';
+import 'package:de_weather/src/presentation/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
-
 
 @RoutePage()
 class SearchScreen extends StatefulWidget {
@@ -17,33 +16,24 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController searchController = TextEditingController();
 
-  final List<Places> placesList = [
-    Places(name: 'Shimla', location: Location(lat: 31.1048, long: 77.1734)),
-    Places(name: 'Mumbai', location: Location(lat: 19.0760, long: 72.8777)),
-    Places(name: 'Bangalore', location: Location(lat: 12.9716, long: 77.5946)),
-    Places(name: 'Kolkata', location: Location(lat: 22.5726, long: 88.3639)),
-    Places(name: 'Chennai', location: Location(lat: 13.0827, long: 80.2707)),
-    Places(name: 'Hyderabad', location: Location(lat: 17.3850, long: 78.4867)),
-    Places(name: 'Pune', location: Location(lat: 18.5204, long: 73.8567)),
-    Places(name: 'Ahmedabad', location: Location(lat: 23.0225, long: 72.5714)),
-    Places(name: 'Jaipur', location: Location(lat: 26.9124, long: 75.7873)),
-    Places(name: 'Lucknow', location: Location(lat: 26.8467, long: 80.9462)),
-  ];
+  final FocusNode _focusNode = FocusNode();
 
   List<Places> searchResult = [];
 
   @override
   void initState() {
     super.initState();
-    searchResult.addAll(placesList);
+    searchResult.addAll(PlacesConstants.placesList);
     searchController.addListener(() {
       onChange();
     });
+
+    // _focusNode.requestFocus();
   }
 
   onChange() {
     setState(() {
-      searchResult = placesList
+      searchResult = PlacesConstants.placesList
           .where((place) => place.name
               .toLowerCase()
               .contains(searchController.text.trim().toLowerCase()))
@@ -56,28 +46,39 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-             title:  const Text('Search', style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'Search',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            TextField(
-              controller: searchController,
-            ),
-            Expanded(
-                child: ListView.builder(
-              itemCount: searchResult.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {
-                    context.router.push(WeatherRoute(place: searchResult[index]));
-                         
-                  },
-                  title: Text(searchResult[index].name),
-                );
-              },
-            ))
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              SearchWidget(
+                focusNode: _focusNode,
+                hintText: "Search",
+                controller: searchController,
+              ),
+              Expanded(
+                  child: ListView.builder(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                itemCount: searchResult.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      context.router
+                          .push(WeatherRoute(place: searchResult[index]));
+                    },
+                    title: Text(searchResult[index].name),
+                  );
+                },
+              ))
+            ],
+          ),
         ),
       ),
     );

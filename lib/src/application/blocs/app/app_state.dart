@@ -14,11 +14,14 @@ class AppState with _$AppState {
     @Default("") String email,
     @Default("") String password,
     @Default("") String errorMessage,
+    @Default("") String loginErrorMessage,
   }) = _AppState;
 
   const factory AppState.authenticated(String user) = Authenticated;
   const factory AppState.unauthenticated() = Unauthenticated;
   const factory AppState.loading(bool value) = Loading;
+
+  const factory AppState.loginError(String message) = LoginError;
 
 
 }

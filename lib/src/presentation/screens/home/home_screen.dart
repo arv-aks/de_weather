@@ -1,14 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:de_weather/injection.dart';
 import 'package:de_weather/src/application/blocs/app/app_bloc.dart';
-import 'package:de_weather/src/application/blocs/weather/weather_cubit.dart';
-import 'package:de_weather/src/infrastructure/repositories/weather_repostory.dart';
+import 'package:de_weather/src/application/cubits/weather/weather_cubit.dart';
+import 'package:de_weather/src/domain/repositories/weather_remote_repo.dart';
 import 'package:de_weather/src/presentation/routes/app_router.dart';
-import 'package:de_weather/src/presentation/screens/home/home_widgets.dart';
+import 'package:de_weather/src/presentation/widgets/search_widget.dart';
+import 'package:de_weather/src/presentation/screens/weather/weather_view.dart';
+import 'package:de_weather/src/presentation/utils/app_theme.dart';
 import 'package:de_weather/src/presentation/widgets/custom_loading.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gap/gap.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -19,19 +23,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late FocusNode _focusNode;
   @override
   void initState() {
     super.initState();
-  }
 
-  Future<void> initLocationService() async {
-    if (!await Geolocator.isLocationServiceEnabled()) {
-      if (mounted) {
-        await HomeUtils.showLocationServiceDialog(context, mounted);
-      }
-    } else {
-      // await handleLocationPermission();
-    }
+    _focusNode = FocusNode();
   }
 
   @override
@@ -43,7 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       },
       child: Scaffold(
+          backgroundColor: AppTheme.onPrimaryColor,
           appBar: AppBar(
+            title: const Text('Weather'),
+            elevation: 0.0,
+            backgroundColor: Colors.transparent,
             actions: [
               IconButton(
                   onPressed: () {
@@ -53,29 +54,78 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           body: BlocProvider(
-            create: (context) =>
-                WeatherCubit(getIt<WeatherRepostory>()),
-            child: BlocBuilder<WeatherCubit, WeatherState>(
-              builder: (context, state) {
-                return state.isLoading
-                    ? const CustomLoading()
-                    : Column(
-                        children: [
-                          TextField(
-                            onTap: () {
-                              context.router.push(const SearchRoute());
-                            },
-                            decoration:
-                                const InputDecoration(hintText: 'Search'),
-                          ),
-                          const Center(
-                            child: Text("hi"),
-                          )
-                        ],
-                      );
-              },
-            ),
-          )),
+              create: (context) =>
+                  WeatherCubit(getIt<WeatherRemoteRepo>())..started(),
+              child: BlocConsumer<WeatherCubit, WeatherState>(
+                builder: (context, state) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: state.isLoading
+                        ? const CustomLoading()
+                        : SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    SearchWidget.searchButton(
+                                      fn: _focusNode,
+                                      hint: "Search",
+                                      onTap: () {
+                                        _focusNode.unfocus();
+                                        context.router
+                                            .push(const SearchRoute());
+                                      },
+                                    ),
+                                    const Gap(20),
+                                    if (state.place != null)
+                                      WeatherView(place: state.place!)
+                                  ],
+                                ),
+                              ),
+                  );
+                },
+                listener: (ctx, state) {
+                  if (!state.isInternetConnected) {
+                    Fluttertoast.showToast(
+                        msg: 'No internet connection. Unable to fetch new Data',
+                        toastLength: Toast.LENGTH_LONG);
+                  }
+
+                  if (state.isLocationPermissionEnabled != null &&
+                      !state.isLocationPermissionEnabled!) {
+                    showDialog(
+                      context: ctx,
+                      barrierDismissible: false,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text("Permission not enabled. "),
+                          content: const Text(
+                              "Please enable the location permission."),
+                          actions: [
+                            TextButton(
+                                onPressed: () async {
+                                  await ctx
+                                      .read<WeatherCubit>()
+                                      .initLocation(openSettings: true);
+                                },
+                                child: const Text("Open"))
+                          ],
+                        );
+                      },
+                    );
+                  }
+
+                  if (state.currentLocationStatus ==
+                      CurrentLocationStatus.progress) {
+                    Fluttertoast.showToast(msg: "Getting current location.");
+                  }
+
+                  if (state.currentLocationStatus ==
+                      CurrentLocationStatus.failure) {
+                    Fluttertoast.showToast(
+                        msg:
+                            "Unable to get current location. Please try again");
+                  }
+                },
+              ))),
     );
   }
 }

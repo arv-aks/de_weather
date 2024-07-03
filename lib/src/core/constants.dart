@@ -1,62 +1,39 @@
-class Constants{
-   static String noData = "No Data";
-  static String clearText = "Clear";
-  static String humidityText = "Humidity";
-  static String feelsLikeText = "Feels Like";
-  static String windText = "Wind";
-  static String degreeCelsius = "ºC";
-  static String cloudsText = "Clouds";
-  static String mistText = "Mist";
-  static String hazeText = "Haze";
-  static String thunderstormText = "Thunderstorm";
-  static String kmPerHour = "km/h";
-  static String percentageText = "%";
-  static String weatherAppError = "Error";
-  static String okay = "Okay";
-  static String cancel = "Cancel";
-  static String addNew = "Add new";
-  static String search = "Search...";
-  static String savedLocations = "Saved Locations";
-  static String weatherAppRouteNotFound = "Route Not Found";
-  static String weatherAppEnableLocation =
-      "Please enable location services so that we can determine your location";
-  static String locationServicesDisabled = "Location services are disabled.";
-  static String locationEnable =
-      "Please enable location services to use this feature.";
-  static String locationServicesUnableToGet =
-      "Location permissions are permanently denied, we cannot request permissions.";
-  static String locationDisabled = "Location Service Disabled";
-  static String pleaseEnableLocation =
-      "Please enable location services to use this feature.";
-  static String openSettings = "Open Settings";
-  static String weatherCast = "WeatherCast";
-  static String locationDenied = "Location permissions are denied";
-  static String locationPermanentlyDenied =
-      "Location permissions are permanently denied, we cannot request permissions.";
-  static String saveCity = "Save New City";
-  static String enterCity = "Enter City";
-  static String save = "Save";
-  static String loading = "Loading Data...";
-  static String noCityData =
-      "Currently we are unable to fetch you city response, add new city and enjoy the service";
-  static const String appGroupId = '<YOUR APP GROUP>';
-  static const String iOSWidgetName = 'WeatherAppHomeScreenWidget';
-  static const String androidWidgetName = 'WeatherAppHomeScreenWidget';
-  static const String continueToPage = 'Continue';
+import 'package:de_weather/src/infrastructure/model/location/location.dart';
+import 'package:de_weather/src/infrastructure/model/places/places.dart';
 
-  ////response related
+class Constants {
+  static const String uvIndex = "UV INDEX";
 
-  static const String daily = "daily";
-  static const String invalidJson = "Invalid JSON format";
-  static const String notFound = "Not Found";
-  static const String unExpectedError = "An unexpected error occurred";
-  static const String dataInsertionFailed = "Data Insertion Error";
-  static const String unExpectedStatusCode =
-      "Error: Unexpected response status code";
-  static const String noWeatherInfo = "No Weather info found for city";
-  static const String syncDone="Sync Completed";
+  static const String wind = "WIND";
+
+  static const String humidity = "HUMIDITY";
 }
 
-class WeatherConstants{
-    static const String baseURL="https://api.open-meteo.com/v1/forecast";
+class WeatherConstants {
+  static const String baseURL = "https://api.open-meteo.com/v1/forecast";
+}
+
+class PlacesConstants {
+  static List<Places> placesList = [
+    Places(name: 'Shimla', location: Location(lat: 31.1048, long: 77.1734)),
+    Places(name: 'Mumbai', location: Location(lat: 19.0760, long: 72.8777)),
+    Places(name: 'Bangalore', location: Location(lat: 12.9716, long: 77.5946)),
+    Places(name: 'Kolkata', location: Location(lat: 22.5726, long: 88.3639)),
+    Places(name: 'Chennai', location: Location(lat: 13.0827, long: 80.2707)),
+    Places(name: 'Hyderabad', location: Location(lat: 17.3850, long: 78.4867)),
+    Places(name: 'Pune', location: Location(lat: 18.5204, long: 73.8567)),
+    Places(name: 'Ahmedabad', location: Location(lat: 23.0225, long: 72.5714)),
+    Places(name: 'Jaipur', location: Location(lat: 26.9124, long: 75.7873)),
+    Places(name: 'Lucknow', location: Location(lat: 26.8467, long: 80.9462)),
+    Places(name: 'Delhi', location: Location(lat: 28.7041, long: 77.1025)),
+    Places(name: 'Agra', location: Location(lat: 27.1767, long: 78.0081)),
+    Places(name: 'Varanasi', location: Location(lat: 25.3176, long: 82.9739)),
+    Places(name: 'Amritsar', location: Location(lat: 31.6340, long: 74.8723)),
+    Places(name: 'Goa', location: Location(lat: 15.2993, long: 74.1240)),
+    Places(name: 'Bhopal', location: Location(lat: 23.2599, long: 77.4126)),
+    Places(name: 'Indore', location: Location(lat: 22.7196, long: 75.8577)),
+    Places(name: 'Patna', location: Location(lat: 25.5941, long: 85.1376)),
+    Places(name: 'Ranchi', location: Location(lat: 23.3441, long: 85.3096)),
+    Places(name: 'Raipur', location: Location(lat: 21.2514, long: 81.6296)),
+  ];
 }

@@ -19,17 +19,23 @@ class PlacesAdapter extends TypeAdapter<Places> {
     return Places(
       name: fields[0] as String,
       location: fields[1] as Location,
+      weather: fields[2] as WeatherModel?,
+      lastSyncedTime: fields[3] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Places obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.location);
+      ..write(obj.location)
+      ..writeByte(2)
+      ..write(obj.weather)
+      ..writeByte(3)
+      ..write(obj.lastSyncedTime);
   }
 
   @override

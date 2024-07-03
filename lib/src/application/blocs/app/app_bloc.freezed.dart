@@ -18,32 +18,53 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AppState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)
         $default, {
     required TResult Function(String user) authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(bool value) loading,
+    required TResult Function(String message) loginError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult? Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult? Function(String user)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(bool value)? loading,
+    TResult? Function(String message)? loginError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult Function(String user)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(bool value)? loading,
+    TResult Function(String message)? loginError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -53,6 +74,7 @@ mixin _$AppState {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(LoginError value) loginError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,6 +83,7 @@ mixin _$AppState {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
+    TResult? Function(LoginError value)? loginError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,6 +92,7 @@ mixin _$AppState {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(LoginError value)? loginError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -103,7 +127,8 @@ abstract class _$$AppStateImplCopyWith<$Res> {
       bool isLoading,
       String email,
       String password,
-      String errorMessage});
+      String errorMessage,
+      String loginErrorMessage});
 }
 
 /// @nodoc
@@ -123,6 +148,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? email = null,
     Object? password = null,
     Object? errorMessage = null,
+    Object? loginErrorMessage = null,
   }) {
     return _then(_$AppStateImpl(
       status: null == status
@@ -149,6 +175,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      loginErrorMessage: null == loginErrorMessage
+          ? _value.loginErrorMessage
+          : loginErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -162,7 +192,8 @@ class _$AppStateImpl implements _AppState {
       this.isLoading = false,
       this.email = "",
       this.password = "",
-      this.errorMessage = ""});
+      this.errorMessage = "",
+      this.loginErrorMessage = ""});
 
   @override
   final AppStatus status;
@@ -181,10 +212,13 @@ class _$AppStateImpl implements _AppState {
   @override
   @JsonKey()
   final String errorMessage;
+  @override
+  @JsonKey()
+  final String loginErrorMessage;
 
   @override
   String toString() {
-    return 'AppState(status: $status, user: $user, isLoading: $isLoading, email: $email, password: $password, errorMessage: $errorMessage)';
+    return 'AppState(status: $status, user: $user, isLoading: $isLoading, email: $email, password: $password, errorMessage: $errorMessage, loginErrorMessage: $loginErrorMessage)';
   }
 
   @override
@@ -200,12 +234,14 @@ class _$AppStateImpl implements _AppState {
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            (identical(other.loginErrorMessage, loginErrorMessage) ||
+                other.loginErrorMessage == loginErrorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, user, isLoading, email, password, errorMessage);
+  int get hashCode => Object.hash(runtimeType, status, user, isLoading, email,
+      password, errorMessage, loginErrorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -216,43 +252,66 @@ class _$AppStateImpl implements _AppState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)
         $default, {
     required TResult Function(String user) authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(bool value) loading,
+    required TResult Function(String message) loginError,
   }) {
-    return $default(status, user, isLoading, email, password, errorMessage);
+    return $default(status, user, isLoading, email, password, errorMessage,
+        loginErrorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult? Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult? Function(String user)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(bool value)? loading,
+    TResult? Function(String message)? loginError,
   }) {
-    return $default?.call(
-        status, user, isLoading, email, password, errorMessage);
+    return $default?.call(status, user, isLoading, email, password,
+        errorMessage, loginErrorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult Function(String user)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(bool value)? loading,
+    TResult Function(String message)? loginError,
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(status, user, isLoading, email, password, errorMessage);
+      return $default(status, user, isLoading, email, password, errorMessage,
+          loginErrorMessage);
     }
     return orElse();
   }
@@ -264,6 +323,7 @@ class _$AppStateImpl implements _AppState {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(LoginError value) loginError,
   }) {
     return $default(this);
   }
@@ -275,6 +335,7 @@ class _$AppStateImpl implements _AppState {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
+    TResult? Function(LoginError value)? loginError,
   }) {
     return $default?.call(this);
   }
@@ -286,6 +347,7 @@ class _$AppStateImpl implements _AppState {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(LoginError value)? loginError,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -302,7 +364,8 @@ abstract class _AppState implements AppState {
       final bool isLoading,
       final String email,
       final String password,
-      final String errorMessage}) = _$AppStateImpl;
+      final String errorMessage,
+      final String loginErrorMessage}) = _$AppStateImpl;
 
   AppStatus get status;
   String get user;
@@ -310,6 +373,7 @@ abstract class _AppState implements AppState {
   String get email;
   String get password;
   String get errorMessage;
+  String get loginErrorMessage;
   @JsonKey(ignore: true)
   _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -379,12 +443,19 @@ class _$AuthenticatedImpl implements Authenticated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)
         $default, {
     required TResult Function(String user) authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(bool value) loading,
+    required TResult Function(String message) loginError,
   }) {
     return authenticated(user);
   }
@@ -392,12 +463,19 @@ class _$AuthenticatedImpl implements Authenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult? Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult? Function(String user)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(bool value)? loading,
+    TResult? Function(String message)? loginError,
   }) {
     return authenticated?.call(user);
   }
@@ -405,12 +483,19 @@ class _$AuthenticatedImpl implements Authenticated {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult Function(String user)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(bool value)? loading,
+    TResult Function(String message)? loginError,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -426,6 +511,7 @@ class _$AuthenticatedImpl implements Authenticated {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(LoginError value) loginError,
   }) {
     return authenticated(this);
   }
@@ -437,6 +523,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
+    TResult? Function(LoginError value)? loginError,
   }) {
     return authenticated?.call(this);
   }
@@ -448,6 +535,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(LoginError value)? loginError,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -504,12 +592,19 @@ class _$UnauthenticatedImpl implements Unauthenticated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)
         $default, {
     required TResult Function(String user) authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(bool value) loading,
+    required TResult Function(String message) loginError,
   }) {
     return unauthenticated();
   }
@@ -517,12 +612,19 @@ class _$UnauthenticatedImpl implements Unauthenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult? Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult? Function(String user)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(bool value)? loading,
+    TResult? Function(String message)? loginError,
   }) {
     return unauthenticated?.call();
   }
@@ -530,12 +632,19 @@ class _$UnauthenticatedImpl implements Unauthenticated {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult Function(String user)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(bool value)? loading,
+    TResult Function(String message)? loginError,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -551,6 +660,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(LoginError value) loginError,
   }) {
     return unauthenticated(this);
   }
@@ -562,6 +672,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
+    TResult? Function(LoginError value)? loginError,
   }) {
     return unauthenticated?.call(this);
   }
@@ -573,6 +684,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(LoginError value)? loginError,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -650,12 +762,19 @@ class _$LoadingImpl implements Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)
         $default, {
     required TResult Function(String user) authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(bool value) loading,
+    required TResult Function(String message) loginError,
   }) {
     return loading(value);
   }
@@ -663,12 +782,19 @@ class _$LoadingImpl implements Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult? Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult? Function(String user)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(bool value)? loading,
+    TResult? Function(String message)? loginError,
   }) {
     return loading?.call(value);
   }
@@ -676,12 +802,19 @@ class _$LoadingImpl implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(AppStatus status, String user, bool isLoading,
-            String email, String password, String errorMessage)?
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
         $default, {
     TResult Function(String user)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(bool value)? loading,
+    TResult Function(String message)? loginError,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -697,6 +830,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(LoginError value) loginError,
   }) {
     return loading(this);
   }
@@ -708,6 +842,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
+    TResult? Function(LoginError value)? loginError,
   }) {
     return loading?.call(this);
   }
@@ -719,6 +854,7 @@ class _$LoadingImpl implements Loading {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(LoginError value)? loginError,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -734,5 +870,180 @@ abstract class Loading implements AppState {
   bool get value;
   @JsonKey(ignore: true)
   _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoginErrorImplCopyWith<$Res> {
+  factory _$$LoginErrorImplCopyWith(
+          _$LoginErrorImpl value, $Res Function(_$LoginErrorImpl) then) =
+      __$$LoginErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$LoginErrorImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$LoginErrorImpl>
+    implements _$$LoginErrorImplCopyWith<$Res> {
+  __$$LoginErrorImplCopyWithImpl(
+      _$LoginErrorImpl _value, $Res Function(_$LoginErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$LoginErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LoginErrorImpl implements LoginError {
+  const _$LoginErrorImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'AppState.loginError(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoginErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoginErrorImplCopyWith<_$LoginErrorImpl> get copyWith =>
+      __$$LoginErrorImplCopyWithImpl<_$LoginErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)
+        $default, {
+    required TResult Function(String user) authenticated,
+    required TResult Function() unauthenticated,
+    required TResult Function(bool value) loading,
+    required TResult Function(String message) loginError,
+  }) {
+    return loginError(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
+        $default, {
+    TResult? Function(String user)? authenticated,
+    TResult? Function()? unauthenticated,
+    TResult? Function(bool value)? loading,
+    TResult? Function(String message)? loginError,
+  }) {
+    return loginError?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            AppStatus status,
+            String user,
+            bool isLoading,
+            String email,
+            String password,
+            String errorMessage,
+            String loginErrorMessage)?
+        $default, {
+    TResult Function(String user)? authenticated,
+    TResult Function()? unauthenticated,
+    TResult Function(bool value)? loading,
+    TResult Function(String message)? loginError,
+    required TResult orElse(),
+  }) {
+    if (loginError != null) {
+      return loginError(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_AppState value) $default, {
+    required TResult Function(Authenticated value) authenticated,
+    required TResult Function(Unauthenticated value) unauthenticated,
+    required TResult Function(Loading value) loading,
+    required TResult Function(LoginError value) loginError,
+  }) {
+    return loginError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_AppState value)? $default, {
+    TResult? Function(Authenticated value)? authenticated,
+    TResult? Function(Unauthenticated value)? unauthenticated,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(LoginError value)? loginError,
+  }) {
+    return loginError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_AppState value)? $default, {
+    TResult Function(Authenticated value)? authenticated,
+    TResult Function(Unauthenticated value)? unauthenticated,
+    TResult Function(Loading value)? loading,
+    TResult Function(LoginError value)? loginError,
+    required TResult orElse(),
+  }) {
+    if (loginError != null) {
+      return loginError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoginError implements AppState {
+  const factory LoginError(final String message) = _$LoginErrorImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$LoginErrorImplCopyWith<_$LoginErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

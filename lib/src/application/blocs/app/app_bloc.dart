@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:de_weather/src/infrastructure/repositories/auth_repository.dart';
+import 'package:de_weather/src/infrastructure/result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -49,23 +50,26 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   FutureOr<void> _onLoginSubmitted(
       LoginSubmitted event, Emitter<AppState> emit) async {
-    // emit(const AppState.loading(true));
-
-    // await _authRepository.signUp(email: event.email, password: event.password);
-    // emit(const AppState.loading(false));
     emit(const AppState.loading(true));
-    try {
-      await _authRepository.signUp(
-          email: event.email, password: event.password);
+
+    final result = await _authRepository.signUp(
+      email: event.email,
+      password: event.password,
+    );
+
+    if (result is Success<String>) {
       final user = _authRepository.currentUser;
       if (user != null) {
+        emit(const AppState.loading(false));
         emit(const AppState.authenticated("user"));
       } else {
+        emit(const AppState.loading(false));
         emit(const AppState.unauthenticated());
       }
-    } catch (e) {
-      emit(const AppState.unauthenticated());
+    } else if (result is Error) {
+      final err = result as Error;
+      emit(const AppState.loading(false));
+      emit(AppState.loginError(err.message));
     }
-    emit(const AppState.loading(false));
   }
 }
